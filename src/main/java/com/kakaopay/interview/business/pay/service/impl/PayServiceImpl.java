@@ -9,10 +9,12 @@ import com.kakaopay.interview.business.pay.entity.PayFactory;
 import com.kakaopay.interview.business.pay.entity.Payment;
 import com.kakaopay.interview.business.pay.repository.PayRepository;
 import com.kakaopay.interview.business.pay.service.PayService;
+import com.kakaopay.interview.utils.exceptions.PayNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PayServiceImpl implements PayService {
@@ -50,7 +52,10 @@ public class PayServiceImpl implements PayService {
 
     @Override
     public PayDto.PayDecryptDto getPayByPayNo(Long payNo) {
-        Pay pay = payRepository.getPayByPayNo(payNo);
+
+        Pay pay = Optional.ofNullable(payRepository.getPayByPayNo(payNo))
+                .orElseThrow(() -> new PayNotFoundException("결제 정보를 찾을 수 없습니다. payNo: "+ payNo));
+
         Payment.Card card = Payment.Card.decrypt(pay.getEncryptCardInfo());
         PayDto.PayDecryptDto decryptDto = PayDto.PayDecryptDto.builder()
                 .cardNo(card.getCardNo())
@@ -72,7 +77,9 @@ public class PayServiceImpl implements PayService {
     @Override
     public PayDto.PayDecryptDto getPayCancelByPayNo(Long payNo) {
 
-        Pay pay = payRepository.getPayCancelByPayNo(payNo);
+        Pay pay = Optional.ofNullable(payRepository.getPayCancelByPayNo(payNo))
+                .orElseThrow(() -> new PayNotFoundException("결제 취소 정보를 찾을 수 없습니다. payNo: "+ payNo));
+
         Payment.Card card = Payment.Card.decrypt(pay.getEncryptCardInfo());
         PayDto.PayDecryptDto decryptDto = PayDto.PayDecryptDto.builder()
                 .cardNo(card.getCardNo())

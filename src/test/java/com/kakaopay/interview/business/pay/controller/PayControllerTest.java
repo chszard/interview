@@ -120,12 +120,12 @@ public class PayControllerTest {
     @Test
     void getPay() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/"+String.valueOf(1L))
+                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/"+String.valueOf(20L))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(request)
-                .andExpect(status().isOk())
+                .andExpect(status().is4xxClientError())
                 .andDo(print())
                 .andReturn();
     }
