@@ -1,0 +1,16 @@
+version: "3"
+services:
+  db:
+    restart: always
+    image: mysql:8.0
+    container_name: mysql-order-db
+    ports:
+      - "3310:3306"
+    environment:
+      - MYSQL_DATABASE=order-db
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=password
+    command: --character-set-server=utf8 --collation-server=utf8_general_ci --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./volumes/mysql:/var/lib/mysql

@@ -1,0 +1,115 @@
+package com.kakaopay.interview.total;
+
+import com.kakaopay.interview.business.claim.dto.ClaimDto;
+import com.kakaopay.interview.business.claim.entity.Claim;
+import com.kakaopay.interview.business.claim.service.ClaimService;
+import com.kakaopay.interview.business.member.entity.Member;
+import com.kakaopay.interview.business.member.repository.MemberRepository;
+import com.kakaopay.interview.business.order.dto.OrderDto;
+import com.kakaopay.interview.business.order.entity.Order;
+import com.kakaopay.interview.business.order.service.OrderService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+public class TotalIntegrateSenarioTest2 {
+    static final Logger logger = LoggerFactory.getLogger(TotalIntegrateSenarioTest1.class);
+
+    @Autowired
+    private MemberRepository memberRepository;
+
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private ClaimService claimService;
+
+    private Member member;
+    private Order order;
+
+    @BeforeEach
+    void setUp() throws Exception {
+        this.member = insertMember();
+        this.order = insertOrder();
+    }
+
+    @Test
+    public void totalPaymentTest2() throws Exception {
+        logger.info("[CLAIM][START] ==== claim success1");
+        insertClaim_Success1();
+        logger.info("[CLAIM][PASS] ==== claim success1");
+
+        logger.info("[CLAIM][START] ==== claim fail1");
+        try {
+            insertClaim_fail1();
+        } catch (Exception e) {
+            logger.info("[CLAIM][LOG]: " + e.getMessage());
+        }
+        logger.info("[CLAIM][PASS] ==== claim fail1");
+
+        logger.info("[CLAIM][START] ==== claim success2");
+        insertClaim_Success2();
+        logger.info("[CLAIM][PASS] ==== claim success2");
+
+    }
+
+    public Member insertMember() {
+        if (this.member != null) return this.member;
+
+        Member member = new Member();
+        member.setEmail("chszard@gmail.com");
+        member.setUsername("chszard");
+        member.setPassword("1234");
+        member.setEnabled(true);
+        member.setRole("ROLE_USER");
+
+        return memberRepository.save(member);
+    }
+
+    public Order insertOrder() {
+        logger.info("[START] ==== order");
+        OrderDto.PaymentDto paymentDto = OrderDto.PaymentDto.builder()
+                .cardNo("1234567890")
+                .cvc("030")
+                .expirationDate("0426")
+                .monthlyPayment(0)
+                .totalAmt(20000L)
+                .vatAmt(909L)
+                .build();
+        return orderService.createOrder(member, paymentDto);
+    }
+
+    public Claim insertClaim_Success1() throws Exception {
+        ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
+                .cancelTotalAmt(10000L)
+                .cancelVatAmt(0L)
+                .orderNo(this.order.getOrderNo())
+                .build();
+        return claimService.cancelOrder(member, cancelDto);
+    }
+
+    public Claim insertClaim_fail1() throws Exception {
+        ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
+                .cancelTotalAmt(10000L)
+                .cancelVatAmt(0L)
+                .orderNo(this.order.getOrderNo())
+                .build();
+        return claimService.cancelOrder(member, cancelDto);
+    }
+
+    public Claim insertClaim_Success2() throws Exception {
+        ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
+                .cancelTotalAmt(10000L)
+                .cancelVatAmt(909L)
+                .orderNo(this.order.getOrderNo())
+                .build();
+        return claimService.cancelOrder(member, cancelDto);
+    }
+}
