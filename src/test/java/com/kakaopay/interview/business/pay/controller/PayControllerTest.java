@@ -133,7 +133,7 @@ public class PayControllerTest {
     @Test
     void getPayCancel() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/cancel/"+String.valueOf(2L))
+                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/cancel/"+String.valueOf(claim.getPay().getPayNo()))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
