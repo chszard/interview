@@ -9,7 +9,6 @@ import com.kakaopay.interview.business.order.dto.OrderDto;
 import com.kakaopay.interview.business.order.entity.Order;
 import com.kakaopay.interview.business.order.service.OrderService;
 import com.kakaopay.interview.business.pay.entity.Pay;
-import com.kakaopay.interview.business.pay.service.PayService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -42,9 +41,6 @@ public class PayControllerTest {
 
     @Autowired
     private ClaimService claimService;
-
-    @Autowired
-    private PayService payService;
 
     private Member member;
     private Order order;
@@ -132,7 +128,6 @@ public class PayControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
     }
 
     @Test
@@ -146,6 +141,5 @@ public class PayControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
     }
 }

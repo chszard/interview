@@ -241,7 +241,7 @@ test.java.com.kakaopay.interview.total.TotalIntegrateSenarioTest1
 - [O] 결제
 - [O] 부분취소 성공
 - [O] 부분취소 성공
-- [O] 부분취소 실패
+- [O] 부분취소 실패
 - [O] 부분취소 실패
 - [O] 부분취소 성공
 - [O] 부분취소 실패
@@ -251,7 +251,7 @@ TestCase 2
 test.java.com.kakaopay.interview.total.TotalIntegrateSenarioTest2
 - [O] 결제
 - [O] 부분취소 성공
-- [O] 부분취소 실패
+- [O] 부분취소 실패
 - [O] 부분취소 성공
 ```
 ```
@@ -259,7 +259,7 @@ TestCase 3
 test.java.com.kakaopay.interview.total.TotalIntegrateSenarioTest3
 - [O] 결제
 - [O] 부분취소 성공
-- [O] 부분취소 실패
+- [O] 부분취소 실패
 - [O] 부분취소 실패: 문제 예시가 잘못됨
 부분취소 금액 10000의 부가세 null 인 경우 909임.
 따라서 남아있는 부가세인 818 보다 취소하려는 금액이 커서 실패.
