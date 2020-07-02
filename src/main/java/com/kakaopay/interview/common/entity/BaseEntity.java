@@ -15,6 +15,9 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseEntity implements Serializable {
+
+
+
     // 동시 결제 테스트 용 주석
     // createdDate 관련 부분 주석처리 해야함.
     @CreatedDate
