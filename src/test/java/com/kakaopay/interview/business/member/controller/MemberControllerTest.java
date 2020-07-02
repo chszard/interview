@@ -1,7 +1,6 @@
 package com.kakaopay.interview.business.member.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kakaopay.interview.business.claim.dto.ClaimDto;
 import com.kakaopay.interview.business.member.dto.MemberDto;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -15,7 +14,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
