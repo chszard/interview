@@ -4,7 +4,7 @@ import com.kakaopay.interview.business.member.dto.MemberDto;
 import com.kakaopay.interview.business.member.entity.Member;
 import com.kakaopay.interview.business.member.repository.MemberRepository;
 import com.kakaopay.interview.business.member.service.MemberService;
-import com.kakaopay.interview.utils.exceptions.UserNotFoundException;
+
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
