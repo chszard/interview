@@ -54,7 +54,7 @@ public class PayServiceImpl implements PayService {
     public PayDto.PayDecryptDto getPayByPayNo(Long payNo) {
 
         Pay pay = Optional.ofNullable(payRepository.getPayByPayNo(payNo))
-                .orElseThrow(() -> new PayNotFoundException("결제 정보를 찾을 수 없습니다. payNo: "+ payNo));
+                .orElseThrow(() -> new PayNotFoundException("결제 정보를 찾을 수 없습니다. payNo: " + payNo));
 
         Payment.Card card = Payment.Card.decrypt(pay.getEncryptCardInfo());
         PayDto.PayDecryptDto decryptDto = PayDto.PayDecryptDto.builder()
@@ -78,7 +78,7 @@ public class PayServiceImpl implements PayService {
     public PayDto.PayDecryptDto getPayCancelByPayNo(Long payNo) {
 
         Pay pay = Optional.ofNullable(payRepository.getPayCancelByPayNo(payNo))
-                .orElseThrow(() -> new PayNotFoundException("결제 취소 정보를 찾을 수 없습니다. payNo: "+ payNo));
+                .orElseThrow(() -> new PayNotFoundException("결제 취소 정보를 찾을 수 없습니다. payNo: " + payNo));
 
         Payment.Card card = Payment.Card.decrypt(pay.getEncryptCardInfo());
         PayDto.PayDecryptDto decryptDto = PayDto.PayDecryptDto.builder()

@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface MemberService {
     Member getMemberByMemberNo(Long memberNo);
+
     Member getMemberByUsername(String username);
 
     Member createMember(MemberDto.CreateDto createDto);

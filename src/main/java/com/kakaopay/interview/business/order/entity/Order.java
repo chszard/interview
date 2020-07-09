@@ -3,6 +3,7 @@ package com.kakaopay.interview.business.order.entity;
 import com.kakaopay.interview.business.member.entity.Member;
 import com.kakaopay.interview.business.order.dto.OrderDto;
 import com.kakaopay.interview.common.entity.BaseEntity;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,14 +14,14 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "OrderInfo")
 public class Order extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderNo;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_no")
     private Member member;
 

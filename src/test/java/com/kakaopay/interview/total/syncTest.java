@@ -52,21 +52,17 @@ public class syncTest {
     // Duplicate entry '2020-06-22 15:00:00.000000-MTIzNDU2Nzg5MDwwNDI2PDAzMA==' for key 'UK4nurd7rg8jfsbqvleq0h04pjm'
     @Test
     public void syncOrderTest() throws Exception {
-        Callable<Void> callable1 = new Callable<Void>()
-        {
+        Callable<Void> callable1 = new Callable<Void>() {
             @Override
-            public Void call() throws Exception
-            {
+            public Void call() throws Exception {
                 insertSyncOrder();
                 return null;
             }
         };
 
-        Callable<Void> callable2 = new Callable<Void>()
-        {
+        Callable<Void> callable2 = new Callable<Void>() {
             @Override
-            public Void call() throws Exception
-            {
+            public Void call() throws Exception {
                 insertSyncOrder();
                 return null;
             }
@@ -89,21 +85,17 @@ public class syncTest {
     @Test
     public void syncCancelOrderTest() throws Exception {
 
-        Callable<Void> callable1 = new Callable<Void>()
-        {
+        Callable<Void> callable1 = new Callable<Void>() {
             @Override
-            public Void call() throws Exception
-            {
+            public Void call() throws Exception {
                 insertCancelOrder1();
                 return null;
             }
         };
 
-        Callable<Void> callable2 = new Callable<Void>()
-        {
+        Callable<Void> callable2 = new Callable<Void>() {
             @Override
-            public Void call() throws Exception
-            {
+            public Void call() throws Exception {
                 insertCancelOrder1();
                 return null;
             }

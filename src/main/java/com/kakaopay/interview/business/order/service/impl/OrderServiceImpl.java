@@ -93,9 +93,11 @@ public class OrderServiceImpl implements OrderService {
     public Order preOrderProcess(Order order) {
         return orderRepository.save(order);
     }
+
     public Pay doPayProcess(Pay pay) {
         return payService.createPay(pay);
     }
+
     public Pay donePayProcess(Pay pay) {
         return payService.createPay(pay);
     }

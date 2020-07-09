@@ -8,5 +8,6 @@ import java.util.Optional;
 
 interface CustomMemberRepository {
     Member getMemberByMemberNo(Long memberNo);
+
     Member getMemberByUsername(String username);
 }

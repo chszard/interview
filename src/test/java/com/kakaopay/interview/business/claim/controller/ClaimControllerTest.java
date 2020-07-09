@@ -90,8 +90,8 @@ class ClaimControllerTest {
 
     @Test
     void listByClaimNo() throws Exception {
-      RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/claim/"+String.valueOf(claim.getClaimNo()))
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/claim/" + String.valueOf(claim.getClaimNo()))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -99,7 +99,7 @@ class ClaimControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
@@ -107,7 +107,7 @@ class ClaimControllerTest {
 
         Long memberNo = 1L;
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(memberNo)+"/claim/list")
+                .get("/v1/" + String.valueOf(memberNo) + "/claim/list")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -115,7 +115,7 @@ class ClaimControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
@@ -123,18 +123,18 @@ class ClaimControllerTest {
         Long memberNo = 1L;
         Long orderNo = 1L;
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(memberNo)+"/claim/order/"+String.valueOf(orderNo))
+                .get("/v1/" + String.valueOf(memberNo) + "/claim/order/" + String.valueOf(orderNo))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
-    void cancelOrder() throws Exception{
+    void cancelOrder() throws Exception {
 
         Long memberNo = member.getMemberNo();
         ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
@@ -147,7 +147,7 @@ class ClaimControllerTest {
         String jsonString = mapper.writeValueAsString(cancelDto);
 
         RequestBuilder request = MockMvcRequestBuilders
-                .post("/v1/"+String.valueOf(memberNo)+"/claim/create")
+                .post("/v1/" + String.valueOf(memberNo) + "/claim/create")
                 .content(jsonString)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);

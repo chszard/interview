@@ -9,7 +9,9 @@ import com.kakaopay.interview.business.pay.dto.PayDto;
 
 import com.kakaopay.interview.common.entity.BaseEntity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
@@ -18,18 +20,12 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import static com.kakaopay.interview.utils.encryption.Encryption.*;
-
-
-@Slf4j
 @Entity
 @Getter
 @Setter
-@Table(name="PayInfo"
-        , uniqueConstraints=@UniqueConstraint(columnNames={"createdDate", "encryptCardInfo"}))
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "PayInfo"
+        , uniqueConstraints = @UniqueConstraint(columnNames = {"createdDate", "encryptCardInfo"}))
 
 public class Pay extends BaseEntity {
 

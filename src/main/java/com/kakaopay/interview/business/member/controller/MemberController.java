@@ -29,7 +29,7 @@ public class MemberController {
     public ResponseEntity createMember(@RequestBody MemberDto.CreateDto createDto) throws Exception {
         Member member = memberService.getMemberByUsername(createDto.getUsername());
         if (member != null) {
-            throw new DuplicatedUserException("사용자가 존재합니다. username: "+createDto.getUsername());
+            throw new DuplicatedUserException("사용자가 존재합니다. username: " + createDto.getUsername());
         }
 
         return ResponseEntity.ok(memberService.createMember(createDto));

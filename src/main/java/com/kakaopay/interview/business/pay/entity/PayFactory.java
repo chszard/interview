@@ -71,9 +71,9 @@ public class PayFactory {
 //        3 cvc 숫자(L)3 카드 cvc 데이터
         sb.append(payEncryptDto.getCvc());
 //        4 거래금액 숫자10 결제/취소 금액결제 : 100원 이상, 취소 : 결제 금액보다 작아야 함
-        sb.append(convertByteArrayLeftPadding(payEncryptDto.getTotalAmt().getBytes(),10));
+        sb.append(convertByteArrayLeftPadding(payEncryptDto.getTotalAmt().getBytes(), 10));
 //        4 부가가치세 숫자(0) 10 결제/취소 금액의부가세 거래금액보다는 작아야한다. 취소의 경우, 원 거래 금액의 부가가치세와 총 취소금액의 부가가치세의 합과 같아야 한다.
-        sb.append(convertByteArrayLeftZeroPadding(payEncryptDto.getVatAmt().getBytes(),10));
+        sb.append(convertByteArrayLeftZeroPadding(payEncryptDto.getVatAmt().getBytes(), 10));
 //        5 원거래 관리번호 문자 20 취소시에만 결제 관리번호 저장 결제시에는 공백
         if (payEncryptDto.getPayType().equals(PayType.PAY.getType())) {
             sb.append(convertByteArrayRightPadding("".getBytes(), 20));

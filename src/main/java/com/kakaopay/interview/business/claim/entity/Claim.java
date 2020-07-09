@@ -5,18 +5,18 @@ import com.kakaopay.interview.business.member.entity.Member;
 import com.kakaopay.interview.business.order.entity.Order;
 import com.kakaopay.interview.business.pay.entity.Pay;
 import com.kakaopay.interview.common.entity.BaseEntity;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 import javax.persistence.*;
 
-
-@Slf4j
 @Entity
 @Getter
 @Setter
-@Table(name="ClaimInfo")
+@Table(name = "ClaimInfo")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Claim extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +42,26 @@ public class Claim extends BaseEntity {
     private Long cancelAmt;
     private Long cancelVatAmt;
 
-    private String updator;
+    private String updater;
     private String creator;
+
+    public Claim(Member member
+            , Order order
+            , Pay pay
+            , ClaimStatus claimStatus
+            , Long totalAmt
+            , Long cancelAmt
+            , Long cancelVatAmt
+            , String updater
+            , String creator) {
+        this.member = member;
+        this.order = order;
+        this.pay = pay;
+        this.claimStatus = claimStatus;
+        this.totalAmt = totalAmt;
+        this.cancelAmt = cancelAmt;
+        this.cancelVatAmt = cancelVatAmt;
+        this.updater = updater;
+        this.creator = creator;
+    }
 }

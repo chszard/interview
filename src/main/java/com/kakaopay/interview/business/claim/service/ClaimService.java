@@ -9,7 +9,10 @@ import java.util.List;
 
 public interface ClaimService {
     List<Claim> getClaimListByOrder(Order order);
+
     List<Claim> getClaimListByMember(Member member);
+
     Claim cancelOrder(Member member, ClaimDto.CancelDto cancelDto) throws Exception;
+
     Claim getClaimByClaimNo(Long claimNo);
 }

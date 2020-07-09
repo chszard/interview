@@ -1,8 +1,8 @@
 package com.kakaopay.interview.business.claim.entity;
 
 public enum ClaimStatus {
-    AV("구매취","AV"),
-    WAIT("구매취소대기","WT");
+    AV("구매취소", "AV"),
+    WAIT("구매취소대기", "WT");
     private String desc;
     private String status;
 

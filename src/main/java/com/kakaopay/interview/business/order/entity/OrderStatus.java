@@ -1,8 +1,8 @@
 package com.kakaopay.interview.business.order.entity;
 
 public enum OrderStatus {
-    AV("구매","AV"),
-    WAIT("구매대기","WT");
+    AV("구매", "AV"),
+    WAIT("구매대기", "WT");
     private String desc;
     private String status;
 

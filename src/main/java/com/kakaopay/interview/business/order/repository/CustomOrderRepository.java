@@ -7,5 +7,6 @@ import java.util.List;
 
 interface CustomOrderRepository {
     List<Order> getOrderListByMember(Member member);
+
     Order getOrderByOrderNo(Long orderNo);
 }

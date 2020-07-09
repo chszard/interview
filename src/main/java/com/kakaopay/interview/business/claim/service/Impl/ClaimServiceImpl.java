@@ -103,13 +103,9 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     private Claim doCancelProcess(Order order, Member member, ClaimDto.CancelDto cancelDto) {
-        Claim claim = new Claim();
-        claim.setMember(member);
-        claim.setCancelAmt(cancelDto.getCancelAmt());
-        claim.setCancelVatAmt(cancelDto.getCancelVatAmt());
-        claim.setTotalAmt(cancelDto.getCancelTotalAmt());
-        claim.setClaimStatus(ClaimStatus.WAIT);
-        claim.setOrder(order);
+        Claim claim = new Claim(member, order, null, ClaimStatus.WAIT
+                , cancelDto.getCancelTotalAmt(), cancelDto.getCancelAmt(), cancelDto.getCancelVatAmt()
+                , null, member.getUsername());
         claimRepository.save(claim);
         return claim;
     }
@@ -120,21 +116,14 @@ public class ClaimServiceImpl implements ClaimService {
 
 
     private void calClaimAmt(Order order, List<Claim> claimList, ClaimDto.CancelDto cancelDto) throws Exception {
-        Long buyTotalAmt = order.getTotalAmt();
         Long buyAmt = order.getBuyAmt();
         Long vatAmt = order.getVatAmt();
-        Long cancelTotalTotAmt = 0L;
         Long cancelVatSumAmt = 0L;
         Long cancelSumAmt = 0L;
-        Long remainTotalAmt = 0L;
         Long remainBuyAmt = 0L;
         Long remainVatAmt = 0L;
 
         if (!CollectionUtils.isEmpty(claimList)) {
-//            cancelTotalTotAmt = claimList.stream()
-//                    .filter(m -> m.getClaimStatus().equals(ClaimStatus.AV))
-//                    .mapToLong(Claim::getTotalAmt)
-//                    .sum();
             cancelVatSumAmt = claimList.stream()
                     .filter(m -> m.getClaimStatus().equals(ClaimStatus.AV))
                     .mapToLong(Claim::getCancelVatAmt)

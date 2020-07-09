@@ -32,7 +32,7 @@ public class PayController {
     public ResponseEntity list(@PathVariable Long memberNo) {
         Member member = memberService.getMemberByMemberNo(memberNo);
         if (member == null) {
-            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: "+memberNo);
+            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: " + memberNo);
         }
 
         return ResponseEntity.ok(payService.getPayListByMember(member));
@@ -43,12 +43,12 @@ public class PayController {
     public ResponseEntity list(@PathVariable Long memberNo, @PathVariable Long orderNo) {
         Member member = memberService.getMemberByMemberNo(memberNo);
         if (member == null) {
-            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: "+memberNo);
+            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: " + memberNo);
         }
 
         Order order = orderService.getOrderByOrderNo(orderNo);
         if (order == null) {
-            throw new OrderNotFoundException("주문이 존재하지 않습니다. orderNo: "+orderNo);
+            throw new OrderNotFoundException("주문이 존재하지 않습니다. orderNo: " + orderNo);
         }
         return ResponseEntity.ok(payService.getPayListByOrder(order));
     }
@@ -58,7 +58,7 @@ public class PayController {
     public ResponseEntity getPay(@PathVariable Long memberNo, @PathVariable Long payNo) {
         Member member = memberService.getMemberByMemberNo(memberNo);
         if (member == null) {
-            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: "+memberNo);
+            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: " + memberNo);
         }
 
         return ResponseEntity.ok(payService.getPayByPayNo(payNo));
@@ -69,7 +69,7 @@ public class PayController {
     public ResponseEntity getPayCancel(@PathVariable Long memberNo, @PathVariable Long payNo) {
         Member member = memberService.getMemberByMemberNo(memberNo);
         if (member == null) {
-            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: "+memberNo);
+            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: " + memberNo);
         }
 
         return ResponseEntity.ok(payService.getPayCancelByPayNo(payNo));

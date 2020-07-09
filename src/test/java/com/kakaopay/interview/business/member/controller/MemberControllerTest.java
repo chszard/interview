@@ -27,7 +27,7 @@ class MemberControllerTest {
     MockMvc mockMvc;
 
     @Test
-    void createMember() throws Exception{
+    void createMember() throws Exception {
 
         MemberDto.CreateDto createDto = MemberDto.CreateDto.builder()
                 .username("username")
@@ -49,6 +49,6 @@ class MemberControllerTest {
                 .andDo(print())
                 .andReturn();
 
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 }

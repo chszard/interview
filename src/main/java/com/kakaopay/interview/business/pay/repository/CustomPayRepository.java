@@ -8,8 +8,12 @@ import java.util.List;
 
 interface CustomPayRepository {
     List<Pay> getPayListByMember(Member member);
+
     List<Pay> getPayListByOrder(Order order);
+
     Pay getPayByPayNo(Long pay);
+
     Pay getPayCancelByPayNo(Long pay);
+
     Pay getOriginPayByOrder(Order order);
 }

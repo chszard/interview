@@ -8,6 +8,8 @@ import java.util.List;
 
 interface CustomClaimRepository {
     Claim getClaimByClaimNo(Long claimNo);
+
     List<Claim> getClaimListByOrder(Order order);
+
     List<Claim> getClaimListByMember(Member member);
 }

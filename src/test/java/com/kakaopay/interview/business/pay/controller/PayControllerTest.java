@@ -92,7 +92,7 @@ public class PayControllerTest {
     @Test
     void listByMember() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/list")
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/list")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -100,13 +100,13 @@ public class PayControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
     void listByOrderNo() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/"+String.valueOf(order.getOrderNo()+"/list"))
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/" + String.valueOf(order.getOrderNo() + "/list"))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -114,13 +114,13 @@ public class PayControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
     void getPay() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/"+String.valueOf(20L))
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/" + String.valueOf(20L))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -133,7 +133,7 @@ public class PayControllerTest {
     @Test
     void getPayCancel() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/cancel/"+String.valueOf(claim.getPay().getPayNo()))
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/cancel/" + String.valueOf(claim.getPay().getPayNo()))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 

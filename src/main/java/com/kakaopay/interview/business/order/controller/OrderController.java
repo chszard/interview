@@ -28,7 +28,7 @@ public class OrderController {
     public ResponseEntity list(@PathVariable Long memberNo) {
         Member member = memberService.getMemberByMemberNo(memberNo);
         if (member == null) {
-            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: "+memberNo);
+            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: " + memberNo);
         }
 
         return ResponseEntity.ok(orderService.getOrderListByMember(member));
@@ -39,7 +39,7 @@ public class OrderController {
     public ResponseEntity getOrder(@PathVariable Long memberNo, @PathVariable Long orderNo) {
         Member member = memberService.getMemberByMemberNo(memberNo);
         if (member == null) {
-            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: "+memberNo);
+            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: " + memberNo);
         }
         return ResponseEntity.ok(orderService.getOrderByOrderNo(orderNo));
     }
@@ -49,7 +49,7 @@ public class OrderController {
     public ResponseEntity createOrder(@PathVariable Long memberNo, @Valid @RequestBody OrderDto.PaymentDto paymentDto) {
         Member member = memberService.getMemberByMemberNo(memberNo);
         if (member == null) {
-            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: "+memberNo);
+            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: " + memberNo);
         }
 
         return ResponseEntity.ok(orderService.createOrder(member, paymentDto));

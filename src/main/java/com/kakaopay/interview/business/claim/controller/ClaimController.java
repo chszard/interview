@@ -33,7 +33,7 @@ public class ClaimController {
     public ResponseEntity list(@PathVariable Long memberNo) {
         Member member = memberService.getMemberByMemberNo(memberNo);
         if (member == null) {
-            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: "+memberNo);
+            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: " + memberNo);
         }
 
         return ResponseEntity.ok(claimService.getClaimListByMember(member));
@@ -44,7 +44,7 @@ public class ClaimController {
     public ResponseEntity one(@PathVariable Long memberNo, @PathVariable Long claimNo) {
         Member member = memberService.getMemberByMemberNo(memberNo);
         if (member == null) {
-            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: "+memberNo);
+            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: " + memberNo);
         }
 
         return ResponseEntity.ok(claimService.getClaimByClaimNo(claimNo));
@@ -55,12 +55,12 @@ public class ClaimController {
     public ResponseEntity list(@PathVariable Long memberNo, @PathVariable Long orderNo) {
         Member member = memberService.getMemberByMemberNo(memberNo);
         if (member == null) {
-            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: "+memberNo);
+            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: " + memberNo);
         }
 
         Order order = orderService.getOrderByOrderNo(orderNo);
         if (order == null) {
-            throw new OrderNotFoundException("주문이 존재하지 않습니다. orderNo:"+orderNo);
+            throw new OrderNotFoundException("주문이 존재하지 않습니다. orderNo:" + orderNo);
         }
 
         return ResponseEntity.ok(claimService.getClaimListByOrder(order));
@@ -71,7 +71,7 @@ public class ClaimController {
     public ResponseEntity cancelOrder(@PathVariable Long memberNo, @RequestBody ClaimDto.CancelDto cancelDto) throws Exception {
         Member member = memberService.getMemberByMemberNo(memberNo);
         if (member == null) {
-            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: "+memberNo);
+            throw new UserNotFoundException("사용자가 존재하지 않습니다. memberNo: " + memberNo);
         }
 
         return ResponseEntity.ok(claimService.cancelOrder(member, cancelDto));

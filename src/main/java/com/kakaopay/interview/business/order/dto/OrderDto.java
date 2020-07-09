@@ -1,4 +1,5 @@
 package com.kakaopay.interview.business.order.dto;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,14 +42,16 @@ public class OrderDto {
     @Setter
     @Getter
     public static class PaymentDto {
-        private @NotNull @Length(min = 6, max = 10) String cardNo;
+        private @NotNull
+        @Length(min = 6, max = 10)
+        String cardNo;
 
         @NotNull
-        @Length(min=4, max=4, message = "4글자 여야 합니다.")
+        @Length(min = 4, max = 4, message = "4글자 여야 합니다.")
         private String expirationDate;
 
         @NotNull
-        @Length(min=3, max=3, message = "3글자 여야 합니다.")
+        @Length(min = 3, max = 3, message = "3글자 여야 합니다.")
         private String cvc;
 
         @NotNull
@@ -60,7 +63,7 @@ public class OrderDto {
 
         @NotNull
         @Min(value = 100L, message = "최소 100원부터 구매가 가능 합니다.")
-        @Max(value = 1000000000L, message ="최대 10억원 까지 구매가 가능 합니다.")
+        @Max(value = 1000000000L, message = "최대 10억원 까지 구매가 가능 합니다.")
         private Long totalAmt;
 
         @Builder

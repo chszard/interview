@@ -39,22 +39,22 @@ public class Encryption {
     }
 
 
-    public static void cleanByteArray(byte[] target){
-        for(int i = 0; i < target.length; i++){
+    public static void cleanByteArray(byte[] target) {
+        for (int i = 0; i < target.length; i++) {
             target[i] = (byte) 32;
         }
     }
 
-    public static void cleanZeroByteArray(byte[] target){
-        for(int i = 0; i < target.length; i++){
+    public static void cleanZeroByteArray(byte[] target) {
+        for (int i = 0; i < target.length; i++) {
             target[i] = (byte) 48;
         }
     }
 
     public static String maskingCardNo(String cardNo) {
         char[] ch = cardNo.toCharArray();
-        for(int i = 0; i < ch.length; i ++){
-            if ((MASKING_START_RANGE <= i) && ( i < ch.length - MASKING_END_RANGE)) ch[i] = '*';
+        for (int i = 0; i < ch.length; i++) {
+            if ((MASKING_START_RANGE <= i) && (i < ch.length - MASKING_END_RANGE)) ch[i] = '*';
         }
         return String.valueOf(ch);
     }

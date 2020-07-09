@@ -20,6 +20,7 @@ public class InterviewApplication {
     public Hibernate5Module datatypeHibernateModule() {
         return new Hibernate5Module();
     }
+
     public static void main(String[] args) {
         SpringApplication.run(InterviewApplication.class, args);
     }

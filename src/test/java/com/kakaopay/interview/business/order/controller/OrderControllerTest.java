@@ -73,7 +73,7 @@ public class OrderControllerTest {
     @Test
     void listByOrderNo() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/order/"+String.valueOf(order.getOrderNo()))
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/order/" + String.valueOf(order.getOrderNo()))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -81,11 +81,11 @@ public class OrderControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
-    void createOrder() throws Exception{
+    void createOrder() throws Exception {
 
         Long memberNo = member.getMemberNo();
         OrderDto.PaymentDto paymentDto = OrderDto.PaymentDto.builder()
@@ -101,7 +101,7 @@ public class OrderControllerTest {
         String jsonString = mapper.writeValueAsString(paymentDto);
 
         RequestBuilder request = MockMvcRequestBuilders
-                .post("/v1/"+String.valueOf(memberNo)+"/order/create")
+                .post("/v1/" + String.valueOf(memberNo) + "/order/create")
                 .content(jsonString)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
