@@ -11,6 +11,7 @@ import com.kakaopay.interview.business.order.service.OrderService;
 import com.kakaopay.interview.business.pay.entity.Pay;
 import com.kakaopay.interview.business.pay.entity.PayFactory;
 import com.kakaopay.interview.business.pay.service.PayService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -20,18 +21,13 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class ClaimServiceImpl implements ClaimService {
 
-    private ClaimRepository claimRepository;
-    private OrderService orderService;
-    private PayService payService;
-
-    public ClaimServiceImpl(ClaimRepository claimRepository, OrderService orderService, PayService payService) {
-        this.claimRepository = claimRepository;
-        this.orderService = orderService;
-        this.payService = payService;
-    }
+    private final ClaimRepository claimRepository;
+    private final OrderService orderService;
+    private final PayService payService;
 
     @Override
     public Claim getClaimByClaimNo(Long claimNo) {

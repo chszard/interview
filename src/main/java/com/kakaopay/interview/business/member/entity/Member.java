@@ -1,13 +1,9 @@
 package com.kakaopay.interview.business.member.entity;
 
-
 import com.kakaopay.interview.common.entity.BaseEntity;
 import lombok.*;
-import lombok.extern.slf4j.Slf4j;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.time.LocalDate;
 
 
 @Entity
@@ -28,5 +24,11 @@ public class Member extends BaseEntity {
     private String role;
     private boolean enabled;
 
-
+    public Member(String username, String password, @Email String email, String role, boolean enabled) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.enabled = enabled;
+    }
 }

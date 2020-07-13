@@ -57,14 +57,7 @@ public class PayControllerTest {
 
     public Member insertMember() {
         if (this.member != null) return this.member;
-
-        Member member = new Member();
-        member.setEmail("chszard@gmail.com");
-        member.setUsername("chszard");
-        member.setPassword("1234");
-        member.setEnabled(true);
-        member.setRole("ROLE_USER");
-
+        Member member = new Member("user", "1234", "chszard@gmail.com", "ROLE_USER", true);
         return memberRepository.save(member);
     }
 

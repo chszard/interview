@@ -9,6 +9,7 @@ import com.kakaopay.interview.business.member.repository.MemberRepository;
 import com.kakaopay.interview.business.order.dto.OrderDto;
 import com.kakaopay.interview.business.order.entity.Order;
 import com.kakaopay.interview.business.order.service.OrderService;
+import com.kakaopay.interview.utils.enums.code.MessageType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -16,12 +17,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import java.security.MessageDigest;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -30,6 +35,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class ClaimControllerTest {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Autowired
     private MockMvc mockMvc;
@@ -57,12 +65,7 @@ class ClaimControllerTest {
     public Member insertMember() {
         if (this.member != null) return this.member;
 
-        Member member = new Member();
-        member.setEmail("chszard@gmail.com");
-        member.setUsername("chszard");
-        member.setPassword("1234");
-        member.setEnabled(true);
-        member.setRole("ROLE_USER");
+        Member member = new Member("user", "1234", "chszard@gmail.com", "ROLE_USER", true);
 
         return memberRepository.save(member);
     }
@@ -157,4 +160,5 @@ class ClaimControllerTest {
                 .andDo(print())
                 .andReturn();
     }
+
 }
