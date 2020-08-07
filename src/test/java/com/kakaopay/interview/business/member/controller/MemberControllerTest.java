@@ -1,7 +1,7 @@
 package com.kakaopay.interview.business.member.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kakaopay.interview.business.member.dto.MemberDto;
+import com.commerce.interview.business.member.dto.MemberDto;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
