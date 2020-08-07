@@ -1,8 +1,7 @@
 package com.kakaopay.interview.business.member.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kakaopay.interview.business.claim.dto.ClaimDto;
-import com.kakaopay.interview.business.member.dto.MemberDto;
+import com.commerce.interview.business.member.dto.MemberDto;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,7 +27,7 @@ class MemberControllerTest {
     MockMvc mockMvc;
 
     @Test
-    void createMember() throws Exception{
+    void createMember() throws Exception {
 
         MemberDto.CreateDto createDto = MemberDto.CreateDto.builder()
                 .username("username")
@@ -51,6 +49,6 @@ class MemberControllerTest {
                 .andDo(print())
                 .andReturn();
 
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 }

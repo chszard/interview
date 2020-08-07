@@ -1,11 +1,11 @@
 package com.kakaopay.interview.business.order.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kakaopay.interview.business.member.entity.Member;
-import com.kakaopay.interview.business.member.repository.MemberRepository;
-import com.kakaopay.interview.business.order.dto.OrderDto;
-import com.kakaopay.interview.business.order.entity.Order;
-import com.kakaopay.interview.business.order.service.OrderService;
+import com.commerce.interview.business.member.entity.Member;
+import com.commerce.interview.business.member.repository.MemberRepository;
+import com.commerce.interview.business.order.dto.OrderDto;
+import com.commerce.interview.business.order.entity.Order;
+import com.commerce.interview.business.order.service.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -48,13 +48,7 @@ public class OrderControllerTest {
     public Member insertMember() {
         if (this.member != null) return this.member;
 
-        Member member = new Member();
-        member.setEmail("chszard@gmail.com");
-        member.setUsername("chszard");
-        member.setPassword("1234");
-        member.setEnabled(true);
-        member.setRole("ROLE_USER");
-
+        Member member = new Member("user", "1234", "chszard@gmail.com", "ROLE_USER", true);
         return memberRepository.save(member);
     }
 
@@ -73,7 +67,7 @@ public class OrderControllerTest {
     @Test
     void listByOrderNo() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/order/"+String.valueOf(order.getOrderNo()))
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/order/" + String.valueOf(order.getOrderNo()))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -81,11 +75,11 @@ public class OrderControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
-    void createOrder() throws Exception{
+    void createOrder() throws Exception {
 
         Long memberNo = member.getMemberNo();
         OrderDto.PaymentDto paymentDto = OrderDto.PaymentDto.builder()
@@ -101,7 +95,7 @@ public class OrderControllerTest {
         String jsonString = mapper.writeValueAsString(paymentDto);
 
         RequestBuilder request = MockMvcRequestBuilders
-                .post("/v1/"+String.valueOf(memberNo)+"/order/create")
+                .post("/v1/" + String.valueOf(memberNo) + "/order/create")
                 .content(jsonString)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);

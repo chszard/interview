@@ -1,13 +1,13 @@
 package com.kakaopay.interview.total;
 
-import com.kakaopay.interview.business.claim.dto.ClaimDto;
-import com.kakaopay.interview.business.claim.entity.Claim;
-import com.kakaopay.interview.business.claim.service.ClaimService;
-import com.kakaopay.interview.business.member.entity.Member;
-import com.kakaopay.interview.business.member.repository.MemberRepository;
-import com.kakaopay.interview.business.order.dto.OrderDto;
-import com.kakaopay.interview.business.order.entity.Order;
-import com.kakaopay.interview.business.order.service.OrderService;
+import com.commerce.interview.business.claim.dto.ClaimDto;
+import com.commerce.interview.business.claim.entity.Claim;
+import com.commerce.interview.business.claim.service.ClaimService;
+import com.commerce.interview.business.member.entity.Member;
+import com.commerce.interview.business.member.repository.MemberRepository;
+import com.commerce.interview.business.order.dto.OrderDto;
+import com.commerce.interview.business.order.entity.Order;
+import com.commerce.interview.business.order.service.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -15,7 +15,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -83,13 +82,7 @@ public class TotalIntegrateSenarioTest1 {
     public Member insertMember() {
         if (this.member != null) return this.member;
 
-        Member member = new Member();
-        member.setEmail("chszard@gmail.com");
-        member.setUsername("chszard");
-        member.setPassword("1234");
-        member.setEnabled(true);
-        member.setRole("ROLE_USER");
-
+        Member member = new Member("user", "1234", "chszard@gmail.com", "ROLE_USER", true);
         return memberRepository.save(member);
     }
 

@@ -1,6 +1,6 @@
 package com.kakaopay.interview.total;
 
-import com.kakaopay.interview.utils.encryption.Encryption;
+import com.commerce.interview.utils.encryption.Encryption;
 import org.junit.jupiter.api.Test;
 
 public class UtilTest {

@@ -42,6 +42,8 @@ dependencies {
     implementation 'com.querydsl:querydsl-jpa'
     implementation 'com.querydsl:querydsl-apt'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-hibernate5', version: '2.9.8'
+    compile group: 'p6spy', name: 'p6spy', version: '3.9.0'
+
 
 }
 

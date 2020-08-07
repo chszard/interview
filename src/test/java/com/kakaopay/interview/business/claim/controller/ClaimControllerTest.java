@@ -1,14 +1,14 @@
 package com.kakaopay.interview.business.claim.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kakaopay.interview.business.claim.dto.ClaimDto;
-import com.kakaopay.interview.business.claim.entity.Claim;
-import com.kakaopay.interview.business.claim.service.ClaimService;
-import com.kakaopay.interview.business.member.entity.Member;
-import com.kakaopay.interview.business.member.repository.MemberRepository;
-import com.kakaopay.interview.business.order.dto.OrderDto;
-import com.kakaopay.interview.business.order.entity.Order;
-import com.kakaopay.interview.business.order.service.OrderService;
+import com.commerce.interview.business.claim.dto.ClaimDto;
+import com.commerce.interview.business.claim.entity.Claim;
+import com.commerce.interview.business.claim.service.ClaimService;
+import com.commerce.interview.business.member.entity.Member;
+import com.commerce.interview.business.member.repository.MemberRepository;
+import com.commerce.interview.business.order.dto.OrderDto;
+import com.commerce.interview.business.order.entity.Order;
+import com.commerce.interview.business.order.service.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -30,6 +31,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class ClaimControllerTest {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Autowired
     private MockMvc mockMvc;
@@ -57,12 +61,7 @@ class ClaimControllerTest {
     public Member insertMember() {
         if (this.member != null) return this.member;
 
-        Member member = new Member();
-        member.setEmail("chszard@gmail.com");
-        member.setUsername("chszard");
-        member.setPassword("1234");
-        member.setEnabled(true);
-        member.setRole("ROLE_USER");
+        Member member = new Member("user", "1234", "chszard@gmail.com", "ROLE_USER", true);
 
         return memberRepository.save(member);
     }
@@ -90,8 +89,8 @@ class ClaimControllerTest {
 
     @Test
     void listByClaimNo() throws Exception {
-      RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/claim/"+String.valueOf(claim.getClaimNo()))
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/claim/" + String.valueOf(claim.getClaimNo()))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -99,7 +98,7 @@ class ClaimControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
@@ -107,7 +106,7 @@ class ClaimControllerTest {
 
         Long memberNo = 1L;
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(memberNo)+"/claim/list")
+                .get("/v1/" + String.valueOf(memberNo) + "/claim/list")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -115,7 +114,7 @@ class ClaimControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
@@ -123,18 +122,18 @@ class ClaimControllerTest {
         Long memberNo = 1L;
         Long orderNo = 1L;
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(memberNo)+"/claim/order/"+String.valueOf(orderNo))
+                .get("/v1/" + String.valueOf(memberNo) + "/claim/order/" + String.valueOf(orderNo))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult result = mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
-    void cancelOrder() throws Exception{
+    void cancelOrder() throws Exception {
 
         Long memberNo = member.getMemberNo();
         ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
@@ -147,7 +146,7 @@ class ClaimControllerTest {
         String jsonString = mapper.writeValueAsString(cancelDto);
 
         RequestBuilder request = MockMvcRequestBuilders
-                .post("/v1/"+String.valueOf(memberNo)+"/claim/create")
+                .post("/v1/" + String.valueOf(memberNo) + "/claim/create")
                 .content(jsonString)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -157,4 +156,5 @@ class ClaimControllerTest {
                 .andDo(print())
                 .andReturn();
     }
+
 }

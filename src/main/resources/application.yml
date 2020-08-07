@@ -1,38 +1,38 @@
 spring:
-    profiles:
-        active: local
+  profiles:
+    active: local
 
 ---
 spring:
-    profiles: local
-    datasource:
-        hikari:
-            driver-class-name: org.h2.Driver
-            jdbc-url: jdbc:h2:mem:testdb
-            username: sa
-            password:
-    h2:
-        console:
-            enabled: true
-    jpa:
-        database-platform: org.hibernate.dialect.H2Dialect
-        generate-ddl: true
-        hibernate:
-            ddl-auto: create
-        properties:
-            hibernate:
-                format_sql: true
-                globally_quoted_identifiers: true
-        show-sql: true
+  profiles: local
+  datasource:
+    hikari:
+      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:mem:testdb
+      username: sa
+      password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+        globally_quoted_identifiers: true
+    show-sql: true
 
 logging:
-    level:
-        root: info
-        org:
-            hibernate:
-                type:
-                    descriptor:
-                        sql: trace
+  level:
+    root: info
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
 #server:
 #    error:
 #        include-stacktrace: on_trace_param
@@ -40,34 +40,34 @@ logging:
 
 ---
 spring:
-    profiles: dev
-    datasource:
-        driverClassName: com.mysql.cj.jdbc.Driver
-        url: jdbc:mysql://localhost:3310/order-db?autoReconnect=true&useUnicode=true&characterEncoding=utf8
-        username: admin
-        password: password
-        platform: MYSQL
-    jpa:
-        database-platform: org.hibernate.dialect.MySQL8Dialect
-        database: MYSQL
-        generate-ddl: true
-        hibernate:
-            ddl-auto: create
-        properties:
-            hibernate:
-                format_sql: true
-        show-sql: true
+  profiles: dev
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3310/order-db?autoReconnect=true&useUnicode=true&characterEncoding=utf8
+    username: admin
+    password: password
+    platform: MYSQL
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: MYSQL
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
 logging:
-    level:
-        root: info
-        org:
-            hibernate:
-                type:
-                    descriptor:
-                        sql: trace
-            springframework:
-                security: debug
+  level:
+    root: info
+    org:
+      hibernate:
+        type:
+          descriptor:
+            sql: trace
+      springframework:
+        security: debug
 
 server:
-    error:
-        include-stacktrace: on_trace_param
+  error:
+    include-stacktrace: on_trace_param

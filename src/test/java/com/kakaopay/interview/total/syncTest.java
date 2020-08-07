@@ -1,13 +1,13 @@
 package com.kakaopay.interview.total;
 
-import com.kakaopay.interview.business.claim.dto.ClaimDto;
-import com.kakaopay.interview.business.claim.entity.Claim;
-import com.kakaopay.interview.business.claim.service.ClaimService;
-import com.kakaopay.interview.business.member.entity.Member;
-import com.kakaopay.interview.business.member.repository.MemberRepository;
-import com.kakaopay.interview.business.order.dto.OrderDto;
-import com.kakaopay.interview.business.order.entity.Order;
-import com.kakaopay.interview.business.order.service.OrderService;
+import com.commerce.interview.business.claim.dto.ClaimDto;
+import com.commerce.interview.business.claim.entity.Claim;
+import com.commerce.interview.business.claim.service.ClaimService;
+import com.commerce.interview.business.member.entity.Member;
+import com.commerce.interview.business.member.repository.MemberRepository;
+import com.commerce.interview.business.order.dto.OrderDto;
+import com.commerce.interview.business.order.entity.Order;
+import com.commerce.interview.business.order.service.OrderService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -52,21 +52,17 @@ public class syncTest {
     // Duplicate entry '2020-06-22 15:00:00.000000-MTIzNDU2Nzg5MDwwNDI2PDAzMA==' for key 'UK4nurd7rg8jfsbqvleq0h04pjm'
     @Test
     public void syncOrderTest() throws Exception {
-        Callable<Void> callable1 = new Callable<Void>()
-        {
+        Callable<Void> callable1 = new Callable<Void>() {
             @Override
-            public Void call() throws Exception
-            {
+            public Void call() throws Exception {
                 insertSyncOrder();
                 return null;
             }
         };
 
-        Callable<Void> callable2 = new Callable<Void>()
-        {
+        Callable<Void> callable2 = new Callable<Void>() {
             @Override
-            public Void call() throws Exception
-            {
+            public Void call() throws Exception {
                 insertSyncOrder();
                 return null;
             }
@@ -89,21 +85,17 @@ public class syncTest {
     @Test
     public void syncCancelOrderTest() throws Exception {
 
-        Callable<Void> callable1 = new Callable<Void>()
-        {
+        Callable<Void> callable1 = new Callable<Void>() {
             @Override
-            public Void call() throws Exception
-            {
+            public Void call() throws Exception {
                 insertCancelOrder1();
                 return null;
             }
         };
 
-        Callable<Void> callable2 = new Callable<Void>()
-        {
+        Callable<Void> callable2 = new Callable<Void>() {
             @Override
-            public Void call() throws Exception
-            {
+            public Void call() throws Exception {
                 insertCancelOrder1();
                 return null;
             }
@@ -125,13 +117,7 @@ public class syncTest {
     public Member insertMember() {
         if (this.member != null) return this.member;
 
-        Member member = new Member();
-        member.setEmail("chszard@gmail.com");
-        member.setUsername("chszard");
-        member.setPassword("1234");
-        member.setEnabled(true);
-        member.setRole("ROLE_USER");
-
+        Member member = new Member("user", "1234", "chszard@gmail.com", "ROLE_USER", true);
         return memberRepository.save(member);
     }
 

@@ -1,14 +1,14 @@
 package com.kakaopay.interview.business.pay.controller;
 
-import com.kakaopay.interview.business.claim.dto.ClaimDto;
-import com.kakaopay.interview.business.claim.entity.Claim;
-import com.kakaopay.interview.business.claim.service.ClaimService;
-import com.kakaopay.interview.business.member.entity.Member;
-import com.kakaopay.interview.business.member.repository.MemberRepository;
-import com.kakaopay.interview.business.order.dto.OrderDto;
-import com.kakaopay.interview.business.order.entity.Order;
-import com.kakaopay.interview.business.order.service.OrderService;
-import com.kakaopay.interview.business.pay.entity.Pay;
+import com.commerce.interview.business.claim.dto.ClaimDto;
+import com.commerce.interview.business.claim.entity.Claim;
+import com.commerce.interview.business.claim.service.ClaimService;
+import com.commerce.interview.business.member.entity.Member;
+import com.commerce.interview.business.member.repository.MemberRepository;
+import com.commerce.interview.business.order.dto.OrderDto;
+import com.commerce.interview.business.order.entity.Order;
+import com.commerce.interview.business.order.service.OrderService;
+import com.commerce.interview.business.pay.entity.Pay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -57,14 +57,7 @@ public class PayControllerTest {
 
     public Member insertMember() {
         if (this.member != null) return this.member;
-
-        Member member = new Member();
-        member.setEmail("chszard@gmail.com");
-        member.setUsername("chszard");
-        member.setPassword("1234");
-        member.setEnabled(true);
-        member.setRole("ROLE_USER");
-
+        Member member = new Member("user", "1234", "chszard@gmail.com", "ROLE_USER", true);
         return memberRepository.save(member);
     }
 
@@ -92,7 +85,7 @@ public class PayControllerTest {
     @Test
     void listByMember() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/list")
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/list")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -100,13 +93,13 @@ public class PayControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
     void listByOrderNo() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/"+String.valueOf(order.getOrderNo()+"/list"))
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/" + String.valueOf(order.getOrderNo() + "/list"))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -114,13 +107,13 @@ public class PayControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
-        logger.debug("[RESULT]: "+result.getResponse().getContentAsString());
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
     }
 
     @Test
     void getPay() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/"+String.valueOf(20L))
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/" + String.valueOf(20L))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -133,7 +126,7 @@ public class PayControllerTest {
     @Test
     void getPayCancel() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/"+String.valueOf(member.getMemberNo())+"/pay/cancel/"+String.valueOf(claim.getPay().getPayNo()))
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/cancel/" + String.valueOf(claim.getPay().getPayNo()))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
