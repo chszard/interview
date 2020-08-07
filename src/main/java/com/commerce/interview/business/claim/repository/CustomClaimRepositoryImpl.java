@@ -3,7 +3,7 @@ package com.commerce.interview.business.claim.repository;
 import com.commerce.interview.business.claim.entity.Claim;
 import com.commerce.interview.business.claim.entity.ClaimStatus;
 import com.commerce.interview.business.member.entity.Member;
-import com.kakaopay.interview.business.claim.entity.QClaim;
+import com.commerce.interview.business.claim.entity.QClaim;
 import com.commerce.interview.business.order.entity.Order;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 

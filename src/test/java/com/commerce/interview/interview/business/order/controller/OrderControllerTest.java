@@ -1,9 +1,6 @@
-package com.kakaopay.interview.business.claim.controller;
+package com.commerce.interview.interview.business.order.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.commerce.interview.business.claim.dto.ClaimDto;
-import com.commerce.interview.business.claim.entity.Claim;
-import com.commerce.interview.business.claim.service.ClaimService;
 import com.commerce.interview.business.member.entity.Member;
 import com.commerce.interview.business.member.repository.MemberRepository;
 import com.commerce.interview.business.order.dto.OrderDto;
@@ -16,10 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -29,11 +24,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class ClaimControllerTest {
+public class OrderControllerTest {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    @Autowired
-    private MessageSource messageSource;
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,25 +36,19 @@ class ClaimControllerTest {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private ClaimService claimService;
-
     private Member member;
     private Order order;
-    private Claim claim;
 
     @BeforeEach
     void setUp() throws Exception {
         this.member = insertMember();
         this.order = insertOrder();
-        this.claim = insertClaim();
     }
 
     public Member insertMember() {
         if (this.member != null) return this.member;
 
         Member member = new Member("user", "1234", "chszard@gmail.com", "ROLE_USER", true);
-
         return memberRepository.save(member);
     }
 
@@ -78,19 +64,10 @@ class ClaimControllerTest {
         return orderService.createOrder(member, paymentDto);
     }
 
-    public Claim insertClaim() throws Exception {
-        ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
-                .cancelTotalAmt(1000L)
-                .cancelVatAmt(0L)
-                .orderNo(this.order.getOrderNo())
-                .build();
-        return claimService.cancelOrder(member, cancelDto);
-    }
-
     @Test
-    void listByClaimNo() throws Exception {
+    void listByOrderNo() throws Exception {
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/claim/" + String.valueOf(claim.getClaimNo()))
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/order/" + String.valueOf(order.getOrderNo()))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -102,51 +79,23 @@ class ClaimControllerTest {
     }
 
     @Test
-    void listByMember() throws Exception {
-
-        Long memberNo = 1L;
-        RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/" + String.valueOf(memberNo) + "/claim/list")
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
-
-        MvcResult result = mockMvc.perform(request)
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
-        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
-    }
-
-    @Test
-    void listByOrder() throws Exception {
-        Long memberNo = 1L;
-        Long orderNo = 1L;
-        RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/" + String.valueOf(memberNo) + "/claim/order/" + String.valueOf(orderNo))
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
-        MvcResult result = mockMvc.perform(request)
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andReturn();
-        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
-    }
-
-    @Test
-    void cancelOrder() throws Exception {
+    void createOrder() throws Exception {
 
         Long memberNo = member.getMemberNo();
-        ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
-                .cancelTotalAmt(1000L)
-                .cancelVatAmt(0L)
-                .orderNo(this.order.getOrderNo())
+        OrderDto.PaymentDto paymentDto = OrderDto.PaymentDto.builder()
+                .cardNo("1234567890")
+                .cvc("030")
+                .expirationDate("0426")
+                .monthlyPayment(0)
+                .totalAmt(11000L)
+                .vatAmt(0L)
                 .build();
 
         ObjectMapper mapper = new ObjectMapper();
-        String jsonString = mapper.writeValueAsString(cancelDto);
+        String jsonString = mapper.writeValueAsString(paymentDto);
 
         RequestBuilder request = MockMvcRequestBuilders
-                .post("/v1/" + String.valueOf(memberNo) + "/claim/create")
+                .post("/v1/" + String.valueOf(memberNo) + "/order/create")
                 .content(jsonString)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -156,5 +105,4 @@ class ClaimControllerTest {
                 .andDo(print())
                 .andReturn();
     }
-
 }

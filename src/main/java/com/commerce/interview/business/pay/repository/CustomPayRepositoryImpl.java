@@ -2,11 +2,11 @@ package com.commerce.interview.business.pay.repository;
 
 import com.commerce.interview.business.member.entity.Member;
 import com.commerce.interview.business.order.entity.Order;
-import com.kakaopay.interview.business.order.entity.QOrder;
+import com.commerce.interview.business.order.entity.QOrder;
 import com.commerce.interview.business.pay.entity.Pay;
 import com.commerce.interview.business.pay.entity.PayStatus;
 import com.commerce.interview.business.pay.entity.PayType;
-import com.kakaopay.interview.business.pay.entity.QPay;
+import com.commerce.interview.business.pay.entity.QPay;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;

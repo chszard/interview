@@ -1,7 +1,7 @@
 package com.commerce.interview.business.member.repository;
 
 import com.commerce.interview.business.member.entity.Member;
-import com.kakaopay.interview.business.member.entity.QMember;
+import com.commerce.interview.business.member.entity.QMember;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 public class CustomMemberRepositoryImpl extends QuerydslRepositorySupport implements CustomMemberRepository {

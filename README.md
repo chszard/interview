@@ -33,8 +33,8 @@
 
 ## 빌드와실행하기
 ```
-$ git clone https://https://github.com/chszard/kakaopay-interview
-$ cd kakaopay-interview
+$ git clone https://https://github.com/chszard/interview
+$ cd interview
 $ ./gradlew clean build
 $ java -jar build/libs/interview-0.0.1-SNAPSHOT.jar
 ```
@@ -215,20 +215,20 @@ http://localhost:8080/swagger-ui.html
 ```
 pay_info 테이블의 created_date 필드와 카드정보 암호화 필드(encrypt_card_info) 를 복합 유니크 키로 등록함.
 
-test.java.com.kakaopay.interview.total.syncTest.syncOrderTest 에서
+test.java.syncTest.syncOrderTest 에서
 병렬로 호출해서 테스트함.
 
 BaseEntity createdDate 주석 지우고
 주문 생성시에 강제로 동일 localdatetime 고정한 뒤 테스트.
 Duplicate entry '2020-06-22 15:00:00.000000-MTIzNDU2Nzg5MDwwNDI2PDAzMA==' for key 'UK4nurd7rg8jfsbqvleq0h04pjm'
 
-test.java.com.kakaopay.interview.total.syncTest.syncOrderTest 에서
+test.java.syncTest.syncOrderTest 에서
 병렬로 호출해서 테스트함.[O]
 ```
 
 - 동시에 결제취소 불가
 ``` 
-test.java.com.kakaopay.interview.total.syncTest.syncCancelOrderTest 에서
+test.java.syncTest.syncCancelOrderTest 에서
 병렬로 호출해서 테스트함.[O]
 결제취소 API 호출부의 @Transaction Isolation level을 Serializable로 지정
 ```
@@ -237,7 +237,7 @@ test.java.com.kakaopay.interview.total.syncTest.syncCancelOrderTest 에서
 - 모든 취소 API 는 인터페이스가 동일하며, 금액으로 전체취소, 부분취소로 나뉨.
 ```
 TestCase 1: 
-test.java.com.kakaopay.interview.total.TotalIntegrateSenarioTest1
+test.java.TotalIntegrateSenarioTest1
 - [O] 결제
 - [O] 부분취소 성공
 - [O] 부분취소 성공
@@ -248,7 +248,7 @@ test.java.com.kakaopay.interview.total.TotalIntegrateSenarioTest1
 ```
 ```
 TestCase 2
-test.java.com.kakaopay.interview.total.TotalIntegrateSenarioTest2
+test.java.TotalIntegrateSenarioTest2
 - [O] 결제
 - [O] 부분취소 성공
 - [O] 부분취소 실패
@@ -256,7 +256,7 @@ test.java.com.kakaopay.interview.total.TotalIntegrateSenarioTest2
 ```
 ```
 TestCase 3
-test.java.com.kakaopay.interview.total.TotalIntegrateSenarioTest3
+test.java.TotalIntegrateSenarioTest3
 - [O] 결제
 - [O] 부분취소 성공
 - [O] 부분취소 실패

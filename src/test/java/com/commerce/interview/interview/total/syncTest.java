@@ -1,4 +1,4 @@
-package com.kakaopay.interview.total;
+package com.commerce.interview.interview.total;
 
 import com.commerce.interview.business.claim.dto.ClaimDto;
 import com.commerce.interview.business.claim.entity.Claim;

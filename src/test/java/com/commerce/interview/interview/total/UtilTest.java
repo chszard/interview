@@ -1,4 +1,4 @@
-package com.kakaopay.interview.total;
+package com.commerce.interview.interview.total;
 
 import com.commerce.interview.utils.encryption.Encryption;
 import org.junit.jupiter.api.Test;

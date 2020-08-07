@@ -1,4 +1,4 @@
-package com.kakaopay.interview.business.member.controller;
+package com.commerce.interview.interview.business.member.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.commerce.interview.business.member.dto.MemberDto;
