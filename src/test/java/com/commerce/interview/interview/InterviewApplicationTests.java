@@ -1,4 +1,4 @@
-package com.kakaopay.interview;
+package com.commerce.interview.interview;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

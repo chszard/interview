@@ -1,5 +1,6 @@
-package com.kakaopay.interview.business.pay.controller;
+package com.commerce.interview.interview.business.claim.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.commerce.interview.business.claim.dto.ClaimDto;
 import com.commerce.interview.business.claim.entity.Claim;
 import com.commerce.interview.business.claim.service.ClaimService;
@@ -8,7 +9,6 @@ import com.commerce.interview.business.member.repository.MemberRepository;
 import com.commerce.interview.business.order.dto.OrderDto;
 import com.commerce.interview.business.order.entity.Order;
 import com.commerce.interview.business.order.service.OrderService;
-import com.commerce.interview.business.pay.entity.Pay;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -16,8 +16,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.MessageSource;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -27,8 +29,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class PayControllerTest {
+class ClaimControllerTest {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    private MessageSource messageSource;
 
     @Autowired
     private MockMvc mockMvc;
@@ -44,9 +49,7 @@ public class PayControllerTest {
 
     private Member member;
     private Order order;
-    private Pay pay;
     private Claim claim;
-
 
     @BeforeEach
     void setUp() throws Exception {
@@ -57,7 +60,9 @@ public class PayControllerTest {
 
     public Member insertMember() {
         if (this.member != null) return this.member;
+
         Member member = new Member("user", "1234", "chszard@gmail.com", "ROLE_USER", true);
+
         return memberRepository.save(member);
     }
 
@@ -83,9 +88,25 @@ public class PayControllerTest {
     }
 
     @Test
+    void listByClaimNo() throws Exception {
+        RequestBuilder request = MockMvcRequestBuilders
+                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/claim/" + String.valueOf(claim.getClaimNo()))
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(request)
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andReturn();
+        logger.debug("[RESULT]: " + result.getResponse().getContentAsString());
+    }
+
+    @Test
     void listByMember() throws Exception {
+
+        Long memberNo = 1L;
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/list")
+                .get("/v1/" + String.valueOf(memberNo) + "/claim/list")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
 
@@ -97,12 +118,13 @@ public class PayControllerTest {
     }
 
     @Test
-    void listByOrderNo() throws Exception {
+    void listByOrder() throws Exception {
+        Long memberNo = 1L;
+        Long orderNo = 1L;
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/" + String.valueOf(order.getOrderNo() + "/list"))
+                .get("/v1/" + String.valueOf(memberNo) + "/claim/order/" + String.valueOf(orderNo))
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON);
-
         MvcResult result = mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -111,28 +133,28 @@ public class PayControllerTest {
     }
 
     @Test
-    void getPay() throws Exception {
-        RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/" + String.valueOf(20L))
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
+    void cancelOrder() throws Exception {
 
-        MvcResult result = mockMvc.perform(request)
-                .andExpect(status().is4xxClientError())
-                .andDo(print())
-                .andReturn();
-    }
+        Long memberNo = member.getMemberNo();
+        ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
+                .cancelTotalAmt(1000L)
+                .cancelVatAmt(0L)
+                .orderNo(this.order.getOrderNo())
+                .build();
 
-    @Test
-    void getPayCancel() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonString = mapper.writeValueAsString(cancelDto);
+
         RequestBuilder request = MockMvcRequestBuilders
-                .get("/v1/" + String.valueOf(member.getMemberNo()) + "/pay/cancel/" + String.valueOf(claim.getPay().getPayNo()))
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON);
+                .post("/v1/" + String.valueOf(memberNo) + "/claim/create")
+                .content(jsonString)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(request)
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andReturn();
     }
+
 }

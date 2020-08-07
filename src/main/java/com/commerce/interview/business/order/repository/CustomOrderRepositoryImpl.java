@@ -3,7 +3,7 @@ package com.commerce.interview.business.order.repository;
 import com.commerce.interview.business.member.entity.Member;
 import com.commerce.interview.business.order.entity.Order;
 import com.commerce.interview.business.order.entity.OrderStatus;
-import com.kakaopay.interview.business.order.entity.QOrder;
+import com.commerce.interview.business.order.entity.QOrder;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;

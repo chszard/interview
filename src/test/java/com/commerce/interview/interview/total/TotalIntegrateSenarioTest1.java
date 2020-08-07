@@ -1,4 +1,4 @@
-package com.kakaopay.interview.total;
+package com.commerce.interview.interview.total;
 
 import com.commerce.interview.business.claim.dto.ClaimDto;
 import com.commerce.interview.business.claim.entity.Claim;
@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TotalIntegrateSenarioTest3 {
+public class TotalIntegrateSenarioTest1 {
     static final Logger logger = LoggerFactory.getLogger(TotalIntegrateSenarioTest1.class);
 
     @Autowired
@@ -40,10 +40,14 @@ public class TotalIntegrateSenarioTest3 {
     }
 
     @Test
-    public void totalPaymentTest3() throws Exception {
+    public void totalPaymentTest1() throws Exception {
         logger.info("[CLAIM][START] ==== claim success1");
         insertClaim_Success1();
         logger.info("[CLAIM][PASS] ==== claim success1");
+
+        logger.info("[CLAIM][START] ==== claim success2");
+        insertClaim_Success2();
+        logger.info("[CLAIM][PASS] ==== claim success2");
 
         logger.info("[CLAIM][START] ==== claim fail1");
         try {
@@ -61,13 +65,24 @@ public class TotalIntegrateSenarioTest3 {
         }
         logger.info("[CLAIM][PASS] ==== claim fail2");
 
+        logger.info("[CLAIM][START] ==== claim success3");
+        insertClaim_Success3();
+        logger.info("[CLAIM][PASS] ==== claim success3");
+
+
+        logger.info("[CLAIM][START] ==== claim fail3");
+        try {
+            insertClaim_fail3();
+        } catch (Exception e) {
+            logger.info("[CLAIM][LOG]: " + e.getMessage());
+        }
+        logger.info("[CLAIM][PASS] ==== claim fail3");
     }
 
     public Member insertMember() {
         if (this.member != null) return this.member;
 
         Member member = new Member("user", "1234", "chszard@gmail.com", "ROLE_USER", true);
-
         return memberRepository.save(member);
     }
 
@@ -78,16 +93,25 @@ public class TotalIntegrateSenarioTest3 {
                 .cvc("030")
                 .expirationDate("0426")
                 .monthlyPayment(0)
-                .totalAmt(20000L)
-                .vatAmt(null)
+                .totalAmt(11000L)
+                .vatAmt(1000L)
                 .build();
         return orderService.createOrder(member, paymentDto);
     }
 
     public Claim insertClaim_Success1() throws Exception {
         ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
-                .cancelTotalAmt(10000L)
-                .cancelVatAmt(1000L)
+                .cancelTotalAmt(1100L)
+                .cancelVatAmt(100L)
+                .orderNo(this.order.getOrderNo())
+                .build();
+        return claimService.cancelOrder(member, cancelDto);
+    }
+
+    public Claim insertClaim_Success2() throws Exception {
+        ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
+                .cancelTotalAmt(3300L)
+                .cancelVatAmt(null)
                 .orderNo(this.order.getOrderNo())
                 .build();
         return claimService.cancelOrder(member, cancelDto);
@@ -95,20 +119,38 @@ public class TotalIntegrateSenarioTest3 {
 
     public Claim insertClaim_fail1() throws Exception {
         ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
-                .cancelTotalAmt(10000L)
-                .cancelVatAmt(909L)
-                .orderNo(this.order.getOrderNo())
-                .build();
-        return claimService.cancelOrder(member, cancelDto);
-    }
-
-    //문제가 잘못된 것 같다. 10,000 의 부가세를 자동 계산하면 909 다.
-    public Claim insertClaim_fail2() throws Exception {
-        ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
-                .cancelTotalAmt(10000L)
+                .cancelTotalAmt(7000L)
                 .cancelVatAmt(null)
                 .orderNo(this.order.getOrderNo())
                 .build();
         return claimService.cancelOrder(member, cancelDto);
     }
+
+    public Claim insertClaim_fail2() throws Exception {
+        ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
+                .cancelTotalAmt(6600L)
+                .cancelVatAmt(700L)
+                .orderNo(this.order.getOrderNo())
+                .build();
+        return claimService.cancelOrder(member, cancelDto);
+    }
+
+    public Claim insertClaim_Success3() throws Exception {
+        ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
+                .cancelTotalAmt(6600L)
+                .cancelVatAmt(600L)
+                .orderNo(this.order.getOrderNo())
+                .build();
+        return claimService.cancelOrder(member, cancelDto);
+    }
+
+    public Claim insertClaim_fail3() throws Exception {
+        ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
+                .cancelTotalAmt(100L)
+                .cancelVatAmt(null)
+                .orderNo(this.order.getOrderNo())
+                .build();
+        return claimService.cancelOrder(member, cancelDto);
+    }
+
 }

@@ -1,4 +1,4 @@
-package com.kakaopay.interview.total;
+package com.commerce.interview.interview.total;
 
 import com.commerce.interview.business.claim.dto.ClaimDto;
 import com.commerce.interview.business.claim.entity.Claim;
@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class TotalIntegrateSenarioTest2 {
+public class TotalIntegrateSenarioTest3 {
     static final Logger logger = LoggerFactory.getLogger(TotalIntegrateSenarioTest1.class);
 
     @Autowired
@@ -40,7 +40,7 @@ public class TotalIntegrateSenarioTest2 {
     }
 
     @Test
-    public void totalPaymentTest2() throws Exception {
+    public void totalPaymentTest3() throws Exception {
         logger.info("[CLAIM][START] ==== claim success1");
         insertClaim_Success1();
         logger.info("[CLAIM][PASS] ==== claim success1");
@@ -53,9 +53,13 @@ public class TotalIntegrateSenarioTest2 {
         }
         logger.info("[CLAIM][PASS] ==== claim fail1");
 
-        logger.info("[CLAIM][START] ==== claim success2");
-        insertClaim_Success2();
-        logger.info("[CLAIM][PASS] ==== claim success2");
+        logger.info("[CLAIM][START] ==== claim fail2");
+        try {
+            insertClaim_fail2();
+        } catch (Exception e) {
+            logger.info("[CLAIM][LOG]: " + e.getMessage());
+        }
+        logger.info("[CLAIM][PASS] ==== claim fail2");
 
     }
 
@@ -63,6 +67,7 @@ public class TotalIntegrateSenarioTest2 {
         if (this.member != null) return this.member;
 
         Member member = new Member("user", "1234", "chszard@gmail.com", "ROLE_USER", true);
+
         return memberRepository.save(member);
     }
 
@@ -74,7 +79,7 @@ public class TotalIntegrateSenarioTest2 {
                 .expirationDate("0426")
                 .monthlyPayment(0)
                 .totalAmt(20000L)
-                .vatAmt(909L)
+                .vatAmt(null)
                 .build();
         return orderService.createOrder(member, paymentDto);
     }
@@ -82,7 +87,7 @@ public class TotalIntegrateSenarioTest2 {
     public Claim insertClaim_Success1() throws Exception {
         ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
                 .cancelTotalAmt(10000L)
-                .cancelVatAmt(0L)
+                .cancelVatAmt(1000L)
                 .orderNo(this.order.getOrderNo())
                 .build();
         return claimService.cancelOrder(member, cancelDto);
@@ -91,16 +96,17 @@ public class TotalIntegrateSenarioTest2 {
     public Claim insertClaim_fail1() throws Exception {
         ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
                 .cancelTotalAmt(10000L)
-                .cancelVatAmt(0L)
+                .cancelVatAmt(909L)
                 .orderNo(this.order.getOrderNo())
                 .build();
         return claimService.cancelOrder(member, cancelDto);
     }
 
-    public Claim insertClaim_Success2() throws Exception {
+    //문제가 잘못된 것 같다. 10,000 의 부가세를 자동 계산하면 909 다.
+    public Claim insertClaim_fail2() throws Exception {
         ClaimDto.CancelDto cancelDto = ClaimDto.CancelDto.builder()
                 .cancelTotalAmt(10000L)
-                .cancelVatAmt(909L)
+                .cancelVatAmt(null)
                 .orderNo(this.order.getOrderNo())
                 .build();
         return claimService.cancelOrder(member, cancelDto);

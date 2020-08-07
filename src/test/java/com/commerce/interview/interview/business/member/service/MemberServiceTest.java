@@ -1,4 +1,4 @@
-package com.kakaopay.interview.business.member.service;
+package com.commerce.interview.interview.business.member.service;
 
 import com.commerce.interview.business.member.dto.MemberDto;
 import com.commerce.interview.business.member.entity.Member;
